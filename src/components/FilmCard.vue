@@ -1,4 +1,8 @@
 <script setup>
+import { useRouter} from "vue-router";
+
+const router = useRouter();
+
 const props = defineProps({
   film: {
     type: Object,
@@ -8,14 +12,18 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['add-favorite']);
+
 function addToFavorites() {
   emit('add-favorite', props.film);
+}
+
+function goToFilmDetail() {
+  router.push(`/film/${props.film.id}`);
 }
 </script>
 
 <template>
-  <div class="film-card">
-    <!-- Image centrée en haut -->
+  <div class="film-card" @click="goToFilmDetail">
     <div class="film-poster">
       <img :src="film.poster_url" :alt="film.title" />
     </div>
@@ -45,6 +53,7 @@ function addToFavorites() {
   text-align: center;
   box-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.1);
   transition: transform 0.2s;
+  cursor: pointer;
 }
 
 .film-card:hover {
