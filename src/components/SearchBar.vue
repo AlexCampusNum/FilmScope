@@ -20,7 +20,7 @@ function resetSearch() {
         v-model="searchTerm"
         @input="handleInput"
         type="text"
-        placeholder="Rechercher un film..."
+        placeholder="Rechercher des pastas..."
     />
     <button @click="resetSearch" class="reset-button">✕</button>
   </div>

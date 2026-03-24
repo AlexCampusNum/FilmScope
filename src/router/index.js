@@ -1,6 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
-import FilmDetailView from '@/views/FilmDetailView.vue'
+import PastaDetailView from '@/views/PastaDetailView.vue'
 import FavoritesView from '@/views/FavoritesView.vue'
 
 const router = createRouter({
@@ -16,7 +16,7 @@ const router = createRouter({
     {
       path: '/film/:id',
       name: 'film-detail',
-      component: FilmDetailView
+      component: PastaDetailView
     },
     {
       path: '/favorites',

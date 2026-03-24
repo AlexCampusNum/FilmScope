@@ -4,43 +4,39 @@ import { useRouter} from "vue-router";
 const router = useRouter();
 
 const props = defineProps({
-  film: {
+  pasta: {
     type: Object,
     required: true,
-    default: () => ({ id: 0, title: '', year: 0, poster_url: '', note: 0 })
+    default: () => ({ id: 0, title: '', poster_url: '' })
   }
 })
 
 const emit = defineEmits(['add-favorite']);
 
-function addToFavorites() {
-  emit('add-favorite', props.film);
+function addToFavorites(event) {
+  event.stopPropagation();
+  emit('add-favorite', props.pasta);
 }
 
-function goToFilmDetail() {
-  router.push(`/film/${props.film.id}`);
+function goToPastaDetail() {
+  router.push(`/pasta/${props.pasta.id}`);
 }
 </script>
 
 <template>
-  <div class="film-card" @click="goToFilmDetail">
-    <div class="film-poster">
-      <img :src="film.poster_url" :alt="film.title" />
+  <div class="pasta-card" @click="goToPastaDetail">
+    <div class="pasta-poster">
+      <img :src="pasta.poster_url" :alt="pasta.title" />
     </div>
-
-    <h3 class="film-title">{{ film.title }}</h3>
-
-    <p class="film-year">{{ film.year }}</p>
-
-    <div class="film-rating">
-      <p class="film-note">Note : {{ film.note }}/5</p>
-      <button @click="addToFavorites" class="favorite-button">♥</button>
+    <h3 class="pasta-title">{{ pasta.title }}</h3>
+    <div class="pasta-rating">
+      <button @click.stop="addToFavorites" class="favorite-button">♥</button>
     </div>
   </div>
 </template>
 
 <style scoped>
-.film-card {
+.pasta-card {
   width: clamp(15vw, 200px, 30vw);
   max-width: 90%;
   border: 1px solid #ddd;
@@ -56,16 +52,16 @@ function goToFilmDetail() {
   cursor: pointer;
 }
 
-.film-card:hover {
+.pasta-card:hover {
   transform: translateY(-0.5rem);
 }
 
-.film-poster {
+.pasta-poster {
   width: 100%;
   margin-bottom: 1rem;
 }
 
-.film-poster img {
+.pasta-poster img {
   width: 100%;
   height: auto;
   max-height: 30vh;
@@ -73,32 +69,20 @@ function goToFilmDetail() {
   border-radius: 0.3rem;
 }
 
-.film-title {
+.pasta-title {
   font-size: clamp(1.2rem, 2vw, 1.5rem);
   margin: 0.5rem 0;
   color: #333;
   font-weight: 600;
 }
 
-.film-year {
-  font-size: clamp(0.8rem, 1.5vw, 1rem);
-  color: #666;
-  margin: 0.3rem 0;
-}
-
-.film-rating {
+.pasta-rating {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.8rem;
   margin-top: 0.5rem;
   width: 100%;
-}
-
-.film-note {
-  margin: 0;
-  font-size: clamp(0.8rem, 1.5vw, 1rem);
-  color: #555;
 }
 
 .favorite-button {

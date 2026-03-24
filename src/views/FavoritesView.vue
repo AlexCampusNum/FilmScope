@@ -1,6 +1,6 @@
 <template>
   <div class="favorites-view">
-    <h1>Mes films favoris</h1>
+    <h1>Mes pâtes favoris</h1>
     <p>Cette section sera implémentée au Jour 3.</p>
   </div>
 </template>
