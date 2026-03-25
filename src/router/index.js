@@ -1,11 +1,9 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
-import PastaDetailView from '@/views/PastaDetailView.vue'
+import RecipeDetailView from '@/views/RecipeDetailView.vue'
 import FavoritesView from '@/views/FavoritesView.vue'
 
 const router = createRouter({
-  // createWebHashHistory : URLs en #/... — fonctionne sans config serveur
-  // createWebHistory : URLs propres — nécessite config serveur (production)
   history: createWebHashHistory(),
   routes: [
     {
@@ -14,9 +12,9 @@ const router = createRouter({
       component: HomeView
     },
     {
-      path: '/film/:id',
-      name: 'film-detail',
-      component: PastaDetailView
+      path: '/recipe/:id',
+      name: 'recipe-detail',
+      component: RecipeDetailView
     },
     {
       path: '/favorites',

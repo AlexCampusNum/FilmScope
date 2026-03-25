@@ -10,7 +10,7 @@ function handleInput() {
 
 function resetSearch() {
   searchTerm.value = '';
-  emit('search', '');
+  emit('search', searchTerm.value);
 }
 </script>
 
@@ -20,7 +20,7 @@ function resetSearch() {
         v-model="searchTerm"
         @input="handleInput"
         type="text"
-        placeholder="Rechercher des pastas..."
+        placeholder="Rechercher des recettes..."
     />
     <button @click="resetSearch" class="reset-button">✕</button>
   </div>

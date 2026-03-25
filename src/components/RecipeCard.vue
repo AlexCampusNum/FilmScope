@@ -1,42 +1,52 @@
 <script setup>
 import { useRouter} from "vue-router";
+import { useFavoriteStore } from "@/stores/favoriteStore";
+import { computed } from "vue";
 
 const router = useRouter();
+const favoriteStore = useFavoriteStore();
 
 const props = defineProps({
-  pasta: {
+  recipe: {
     type: Object,
     required: true,
     default: () => ({ id: 0, title: '', poster_url: '' })
   }
 })
 
-const emit = defineEmits(['add-favorite']);
+// const emit = defineEmits(['add-favorite']);
 
-function addToFavorites(event) {
-  event.stopPropagation();
-  emit('add-favorite', props.pasta);
+const isRecipeFavorite = computed(() => favoriteStore.isFavorite(props.recipe.id));
+
+function toggleFavorite(event) {
+  if (isRecipeFavorite.value) {
+    favoriteStore.removeFavorite(props.recipe.id);
+  } else {
+    favoriteStore.addFavorite(props.recipe);
+  }
 }
 
-function goToPastaDetail() {
-  router.push(`/pasta/${props.pasta.id}`);
+function goToRecipeDetail() {
+  router.push(`/recipe/${props.recipe.id}`);
 }
 </script>
 
 <template>
-  <div class="pasta-card" @click="goToPastaDetail">
-    <div class="pasta-poster">
-      <img :src="pasta.poster_url" :alt="pasta.title" />
+  <div class="recipe-card" @click="goToRecipeDetail">
+    <div class="recipe-poster">
+      <img :src="recipe.poster_url" :alt="recipe.title" />
     </div>
-    <h3 class="pasta-title">{{ pasta.title }}</h3>
-    <div class="pasta-rating">
-      <button @click.stop="addToFavorites" class="favorite-button">♥</button>
+    <h3 class="recipe-title">{{ recipe.title }}</h3>
+    <div class="recipe-rating">
+      <button @click.stop="toggleFavorite" class="favorite-button" :class="{ 'is-favorite': isRecipeFavorite}">
+        {{ isRecipeFavorite ? '♥' : '♡' }}
+      </button>
     </div>
   </div>
 </template>
 
 <style scoped>
-.pasta-card {
+.recipe-card {
   width: clamp(15vw, 200px, 30vw);
   max-width: 90%;
   border: 1px solid #ddd;
@@ -52,16 +62,16 @@ function goToPastaDetail() {
   cursor: pointer;
 }
 
-.pasta-card:hover {
+.recipe-card:hover {
   transform: translateY(-0.5rem);
 }
 
-.pasta-poster {
+.recipe-poster {
   width: 100%;
   margin-bottom: 1rem;
 }
 
-.pasta-poster img {
+.recipe-poster img {
   width: 100%;
   height: auto;
   max-height: 30vh;
@@ -69,14 +79,14 @@ function goToPastaDetail() {
   border-radius: 0.3rem;
 }
 
-.pasta-title {
+.recipe-title {
   font-size: clamp(1.2rem, 2vw, 1.5rem);
   margin: 0.5rem 0;
   color: #333;
   font-weight: 600;
 }
 
-.pasta-rating {
+.recipe-rating {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -90,14 +100,17 @@ function goToPastaDetail() {
   border: none;
   font-size: clamp(1rem, 2vw, 1.3rem);
   cursor: pointer;
-  color: #ff6b6b;
+  color: #ccc;
   padding: 0;
   margin: 0;
   flex-shrink: 0;
 }
 
-.favorite-button:hover {
+.favorite-button.is-favorite {
   color: #ff0000;
+}
+
+.favorite-button:hover {
   transform: scale(1.2);
 }
 </style>

@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue';
-import PastaList from '@/components/PastaList.vue';
+import RecipeList from '@/components/RecipeList.vue';
 
 const searchTerm = ref('');
 
@@ -10,7 +10,16 @@ function updateSearch(term) {
 </script>
 
 <template>
-  <PastaList :search="searchTerm" @update-search="updateSearch" />
+  <div class="home">
+    <h1>Liste des recettes</h1>
+    <RecipeList :search="searchTerm" @update-search="updateSearch" />
+  </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.home {
+  padding: 2rem;
+  max-width: 60vw;
+  margin: 0 auto;
+}
+</style>
