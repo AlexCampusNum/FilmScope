@@ -14,8 +14,6 @@ const props = defineProps({
   }
 })
 
-// const emit = defineEmits(['add-favorite']);
-
 const isRecipeFavorite = computed(() => favoriteStore.isFavorite(props.recipe.id));
 
 function toggleFavorite(event) {
